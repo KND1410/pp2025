@@ -14,7 +14,7 @@ def course():
     courses = []
     for i in range(1, numberC+1):
         idC = input(f"Enter the id of the course #{i}: ")
-        nameC = input(f"Enter the name of the course #{i}: ")
+        nameC = str(input(f"Enter the name of the course #{i}: "))
         courses.append({"ID's course": idC, "Name course": nameC})
     print(courses)
     return courses
@@ -23,14 +23,20 @@ def course():
 name_course = course()
 studentinfo = student()
 course_names = [c["Name course"] for c in name_course]
-finding = input("Choose a name of the course to enter mark for student: ")
-if finding in course_names:
-    for i in range(len(studentinfo)):
-        mark = input(f"mark for {studentinfo[i]["Student name"]} {studentinfo[i]["Id"]}: ")
-        studentinfo[i][finding] = mark
-else:
-    print("Don't have course")
+
+while True:
+    finding = input("Choose a name of the course to enter mark for student: ")
+    if finding in course_names:
+        for i in range(len(studentinfo)):
+            mark = input(f"mark for {studentinfo[i]["Student name"]} {studentinfo[i]["Id"]}: ")
+            studentinfo[i][finding] = mark
+        break
+    else:
+        line = "Don't have course, course available: "
+        for i in name_course:
+            print(f"  - {i['Name course']}")
+                
 
 for student in studentinfo:
-    print(f"Sudent {student["Student name"]} mark:", end = ' ')
+    print(f"Student {student["Student name"]} mark:", end = ' ')
     print(student)
