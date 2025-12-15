@@ -1,7 +1,6 @@
 import curses
 
 def output(stdscr, course_list, student_list, mark_info):
-    """Module for curses output - chỉ hiển thị kết quả"""
     stdscr.clear()
     stdscr.getch()
     stdscr.refresh()
