@@ -19,7 +19,7 @@ class infoManager:
         self.marks = []
     
     def load_infomation(self):
-            with open("students.dat", "rb") as f:
+            with open("students.dat.gz", "rb") as f:
                 data = pickle.load(f)
             
             self.num_students = data["num_students"]
@@ -46,7 +46,7 @@ class infoManager:
         line = 0
         
         try:
-            if os.path.exists("students.dat.gz"):
+            if not os.path.exists("students.dat.gz"):
                 self.stdscr.addstr(line, 0, "No data available. Please enter student/course/mark data first.")
                 line += 2
                 self.stdscr.addstr(line, 0, "Press any key...")
@@ -67,7 +67,8 @@ class infoManager:
                             student_id = self.student_ids[i]
                             break
 
-                    self.stdscr.addstr(line, 0, f"Student: {student_name} - ID: {student_id} - Course: {course_name} - Mark: {score}")
+                    self.stdscr.addstr(line, 0, f"{i+1} Student: {student_name} - ID: {student_id} - Course: {course_name} - Mark: {score}")
+
                     line += 1
                 
                 line += 1

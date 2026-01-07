@@ -45,7 +45,7 @@ class mark_student:
                         mark = math.floor(float(get_string(self.stdscr, f"{student_names[s]}'s mark of {finding}: ", line+1, 2))*10)/10
                         student_marks[s][finding] = mark
 
-                        self.marks.append({"Student's name": student_names[s], "Course": finding, "Mark": mark})
+                        self.marks.append({"Student's name": student_names[s], "Student's ID": student_ids[s], "Course": finding, "Mark": mark})
                         line += 3
                     break
                 else:

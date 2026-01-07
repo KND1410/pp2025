@@ -24,13 +24,13 @@ class LoadThread(threading.Thread):
         self.success = False
     
     def run(self):
-        if os.path.exists("students.dat"):
+        if os.path.exists("students.dat.gz"):
             self.stdscr.addstr(1, 0, "Decompressing and loading data...")
             self.stdscr.refresh()
 
             time.sleep(1)
             
-            with gzip.open("students.dat", "rb") as f:
+            with gzip.open("students.dat.gz", "rb") as f:
                 data = pickle.load(f)
             
             self.m.set_num_students(data["num_students"])
@@ -51,9 +51,9 @@ class LoadThread(threading.Thread):
             self.success = True
 
 def load_from_dat(m, stdscr):
-    if os.path.exists("students.dat"):
+    if os.path.exists("students.dat.gz"):
         stdscr.clear()
-        stdscr.addstr(0, 0, "Found students.dat file!")
+        stdscr.addstr(0, 0, "Found students.dat.gz file!")
         stdscr.refresh()
 
         load_thread = LoadThread(m, stdscr)
@@ -86,8 +86,9 @@ class SaveThread(threading.Thread):
             "course_credits": self.m.get_course_credits(),
             "marks": self.m.get_marks()
         }
-        with gzip.open("students.dat", "wb") as f:
+        with gzip.open("students.dat.gz", "wb") as f:
             pickle.dump(data, f)
+            
         
         print("Finished saving data!")
 
@@ -349,6 +350,10 @@ def main(stdscr):
                     stdscr.clear()
                     stdscr.addstr(0, 0, f"ERROR: {str(e)}")
                     stdscr.getch()
+                
+                with open("Info.txt", "w") as f:
+                        for mark in m.get_marks():
+                            f.write(f"{mark['Student\'s name']} | {mark["Student\'s ID"]} | {mark['Course']} | {mark['Mark']}\n")
 
             elif selected == 4:
                 save_to_dat(m)
